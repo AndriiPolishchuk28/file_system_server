@@ -1,17 +1,25 @@
-import express from "express";
-import { createFile } from "../controllers/filesControllers.js";
-import validateBody from "../helpers/validateBody.js";
-import { createFileSchema } from "../schemas/filesSchemas.js";
-import { checkExtension } from "../middlewares/checkExtension.js";
+import express from "express"
+import {
+  createFile,
+  getFiles,
+  getFile,
+} from "../controllers/filesControllers.js"
 
-const filesRouter = express.Router();
+import validateBody from "../helpers/validateBody.js"
+import { createFileSchema } from "../schemas/filesSchemas.js"
+import { checkExtension } from "../middlewares/checkExtension.js"
+
+const filesRouter = express.Router()
 
 filesRouter.post(
   "/",
   validateBody(createFileSchema),
   checkExtension,
   createFile
-);
+)
+filesRouter.get("/", getFiles)
+
+filesRouter.get("/:filename", getFile)
 
 // contactsRouter.get("/:id", getOneContact);
 
@@ -21,4 +29,4 @@ filesRouter.post(
 
 // contactsRouter.put("/:id", updateContact);
 
-export default filesRouter;
+export default filesRouter
